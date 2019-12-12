@@ -4,33 +4,8 @@
 	session_cache_limiter('public');
 	session_start();
 
-	$present=0;
-	if(isset($_POST['present'])){
-		$present=1;
-		$studentid=$_POST['present'];
-	}
-	elseif(isset($_POST['absent'])){
-		$present=2;
-		$studentid=$_POST['absent'];
-	}
-	elseif(isset($_POST['leave'])){
-		$present=3;
-		$studentid=$_POST['leave'];
-	}
-
-	if(isset($_POST['absent']) || isset($_POST['present']) || isset($_POST['leave'])){
-		include('./Requests/library/Requests.php');
-		Requests::register_autoloader();
-		
-		$day= $_SESSION['day'];
-		
-		$courseno=$_SESSION['courseno'];
-		$teacherid=$_SESSION['userid'];
-		
-		$item = array('day' => $day, 'studentid' => $studentid,'courseno' => $courseno, 'present' => $present);			
-		$response = Requests::post('http://127.0.0.1/apipro/attendance/update.php', array(), $item);
-		var_dump($response->body);
-		header('location:take_attendance.php');
+	if(isset($_POST['coursebutton'])){
+		$_SESSION['courseno'] =$_POST['coursebutton'];
 	}
 ?>
 <!DOCTYPE html>
@@ -38,14 +13,14 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="nav.css">
-	<title><?php echo $_SESSION['userid'].'(Teacher)'?></title>
+	<title><?php echo $_SESSION['userid'].'(Student)'?></title>
 </head>
 <body style="background-color: #858ea1;">
 	<div style="background-image: linear-gradient(90deg,#fff,#7effa4,60%,#ec69cb);">
 		<span style="margin-left: 5%; font-size: 35px; font-weight: bold;">Teachers Zone</span>
 		<a href="signout.php" class="hsign"><span style="float: right;font-size:23px;margin-right: 3%;">Sign Out</span></a>
 		<span style="float: right;font-size: 23px;">|&nbsp</span>
-		<a href="teacher.php" class="hsign"><span style="float: right;font-size: 23px;">
+		<a href="student.php" class="hsign"><span style="float: right;font-size: 23px;">
 			<?php echo $_SESSION['userid'] . "&nbsp";?></span></a>
 		</br>
 		<span style="margin-left: 5%;size: 25px;font-weight: bold;">Connect teachers and students</span>	
@@ -57,11 +32,11 @@
 	</div>
 	<div style="margin-top: 10px;">
 		<ul>
-			<li><a href="course_process.php">Students List </a></li>
+			<li><a href="student.php">Home</a></li>
 			<li><a class="active" href="teacher_attendance.php">Attendance</a></li>
 			<li><a href="assignment.php">Assignment</a></li>
-			<li><a href="exam.php">Exam</a></li>
 			<li><a href="project.php">Project</a></li>
+			<li><a href="mark.php">Mark</a></li>
 		</ul>
 	</div>
 
@@ -73,20 +48,19 @@
 			$data = $contents['records'];
 			$no=0;
 			$val = $data;
+			$total = -1;
+			$present = 0;
+			foreach ($data as $key => $value) {
+				if($_SESSION['userid']==$value['studentid'] && $_SESSION['courseno']==$value['courseno']){
+					$total++;
+					if($value['present']==1)$present++;
+				}
+			}
+			$percent = ceil(($present*100)/$total);
 
 			foreach ($data as $key => $value) {
-				if($_SESSION['day']==$value['day'] && $_SESSION['userid']==$value['teacherid'] && $_SESSION['courseno']==$value['courseno']){
-					$total = 0;
-					$present = 0;
-					foreach ($val as $key => $item) {
-						if($value['studentid']==$item['studentid'] && $item['day']!='0001-01-01'){ 
-							$total++;
-							if($item['present']==1)
-								$present++;
-						}
-					}
+				if($_SESSION['userid']==$value['studentid'] && $_SESSION['courseno']==$value['courseno'] && $value['day']!='0001-01-01'){
 					?>
-					<form method="post" action="">
 					<div style="background-color: #00ff4c;padding: 11px;font-size: 22px;width: 7%;float:left;margin-left: 8%;"><?php echo 'No: '.++$no;?></div>
 					<div style="background-color: #b5a7e8;padding: 11px;font-size: 22px;width: 10%;float:left;overflow: hidden;"><?php echo $value['day']?></div>
 					<div style="background-color: #00ff58;padding: 11px;font-size: 22px;width: 10%;float:left;overflow: hidden;"><?php echo $value['studentid']?></div>
@@ -98,13 +72,12 @@
 					<div style="margin-left: 78%;background-color: #00ff58;padding: 11px;font-size: 22px;width: 13%;overflow:hidden;"><?php 
 
 					 $percent = ceil(($present*100)/$total);
-					 echo "Percentage: ".$percent. "%"?></div>
-					</form>
+					 echo "Percentage: ".$percent. "%"?></div>	
 					</br>
-					
 				<?php
 				}
 			}
+					
 		?>
 
 	</div>
