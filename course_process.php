@@ -35,7 +35,7 @@
 		<ul>
 			<li><a class="active" href="course_process.php">Students List</a></li>
 			<li><a href="teacher_attendance.php">Attendance</a></li>
-			<li><a href="assignment.php">Assignment</a></li>
+			<li><a href="teacher_assignment.php">Assignment</a></li>
 			<li><a href="exam.php">Exam</a></li>
 			<li><a href="project.php">Project</a></li>
 		</ul>
