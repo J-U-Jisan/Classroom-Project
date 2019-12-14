@@ -27,14 +27,38 @@
 	</div>
 	<p style="font-size: 24px;font-weight: 800;padding: 10px;margin-top: 10px;text-align: center;background-color: #5b4141; color: white;"><?php 
 		echo "Course No: " . $_SESSION['courseno'] . "&nbsp,&nbsp" ."Course Title : ". $_SESSION[$_SESSION['courseno']];?></p>
-	<div style="background-color: white; box-shadow: 0px 1px 1px 1px #0ff; margin-top: -15px; padding-bottom: 15px;">
-	
+	<div style="background-color: white; box-shadow: 0px 1px 1px 1px #0ff; margin-top: -15px; padding: 5px;color:red;">
+		<marquee>
+		<?php
+			$url = "http://127.0.0.1/apipro/give_assignment/read.php";
+			$json = file_get_contents($url);
+			$contents = json_decode($json,true);
+			$data = $contents['records'];
+			$ar = array();
+			foreach ($data as $key => $value) {
+				if($value['topic']=='111'|| $value['given']==1)continue;
+				if($value['deadline']<date("Y-m-d"))continue;
+				if($value['studentid']==$_SESSION['userid']){
+					if(sizeof($ar)==0){
+						array_push($ar, $value['topic']);
+						echo "Project: ".$value['topic'].", "."Date of Submission: ".$value['deadline'] . "&nbsp&nbsp&nbsp";
+					}
+					else{
+						if($ar[sizeof($ar)-1]!=$value['topic']){
+							array_push($ar, $value['topic']);
+							echo "Project: ".$value['topic'].", "."Date of Submission: ".$value['deadline'] . "&nbsp&nbsp&nbsp";
+						}
+					}
+				}
+			}
+		?>
+		</marquee>
 	</div>
 	<div style="margin-top: 10px;">
 		<ul>
 			<li><a href="student.php">Home</a></li>
-			<li><a class="active" href="teacher_attendance.php">Attendance</a></li>
-			<li><a href="assignment.php">Assignment</a></li>
+			<li><a class="active" href="student_attendance.php">Attendance</a></li>
+			<li><a href="assignment_list.php">Assignment</a></li>
 			<li><a href="project.php">Project</a></li>
 			<li><a href="mark.php">Mark</a></li>
 		</ul>

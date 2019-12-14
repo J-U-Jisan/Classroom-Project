@@ -1,5 +1,34 @@
 <?php
+	header('Cache-Control: no cache'); //no cache
+	session_cache_limiter('private_no_expire'); // works
+	session_cache_limiter('public');
 	session_start();
+	
+	if(isset($_POST['submit'])){
+		include('./Requests/library/Requests.php');
+		Requests::register_autoloader();
+
+		$topic = $_POST['topic'];
+		$deadline = $_POST['deadline'];
+		$courseno=$_SESSION['courseno'];
+		$teacherid=$_SESSION['userid'];
+		$admin_id =$_SESSION['adminid'];
+		$given = 0;
+		
+		$url = "http://127.0.0.1/apipro/assign_student/read.php";
+		$json = file_get_contents($url);
+		$contents = json_decode($json,true);
+		$data = $contents['records'];
+		
+		foreach ($data as $key => $value) {
+			if($value['courseno']==$courseno && $value['admin_id']==$admin_id){
+				$item = array('teacherid' => $teacherid,'studentid' => $value['studentid'],'courseno' => $courseno,'topic' => $topic,'given' => $given,'deadline' => $deadline);
+				$response = Requests::post('http://127.0.0.1/apipro/give_assignment/create.php', array(), $item);
+	 			var_dump($response->body);
+			}
+		}
+		header('location:teacher_assignment.php');
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,15 +45,13 @@
 		<a href="teacher.php" class="hsign"><span style="float: right;font-size: 23px;">
 			<?php echo $_SESSION['userid'] . "&nbsp";?></span></a>
 		</br>
-		<span style="margin-left: 5%;size: 25px;font-weight: bold;">Connect teachers and students</span>	
+		<span style="margin-left: 5%;size: 25px;font-weight: bold;">Connect teachers and students</span>
 	</div>
 	<p style="font-size: 24px;font-weight: 800;padding: 10px;margin-top: 10px;text-align: center;background-color: #5b4141; color: white;"><?php 
 		
 		echo "Course No: " . $_SESSION['courseno'] . "&nbsp,&nbsp" ."Course Title : ". $_SESSION[$_SESSION['courseno']];?></p>
-	<div style="background-color: white; box-shadow: 0px 1px 1px 1px #0ff; margin-top: -15px; padding-bottom: 15px;">
-		
-	</div>
-	<div style="margin-top: 10px;">
+	
+	<div style="margin-top: -10px;">
 		<ul>
 			<li><a href="course_process.php">Students List</a></li>
 			<li><a href="teacher_attendance.php">Attendance</a></li>
@@ -45,6 +72,7 @@
 			$ar = array();
 			
 			foreach ($data as $key => $value) {
+				if($value['topic']=='111')continue;
 				if($value['teacherid']==$_SESSION['userid']){
 					$flag = false;
 					if(sizeof($ar)==0){
@@ -59,7 +87,7 @@
 					}
 					if($flag){
 						?>
-						<div style="margin:auto;padding: 10px;background-color: #3e90b0;font-size: 24px;width:60%;margin-top: 10px;">
+						<div style="margin:auto;padding: 10px;background-color: #044c68;font-size: 24px;width:60%;margin-top: 10px;color: white;">
 							<?php
 								echo "No: ".++$no; 
 							?>
@@ -83,8 +111,8 @@
 				<label style="font-size: 25px;">Topic:</label>
 				<input type="text" name="topic" style="height: 40px;width: 700px;font-size: 20px;"placeholder="Enter topic of assignment"></br>
 				<label style="font-size: 25px;margin-left: -154px;">Date of Submission:</label>
-				<input type="date" name="dateline" style="height: 40px;width: 400px;font-size: 27px;text-align: center;margin-top: 10px;"></br>
-				<input type="submit" name="submit" value="Assign" style="height: 50px;width: 150px;font-size: 25px;margin-top: 10px;background-color: #3ccedd;">
+				<input type="date" name="deadline" style="height: 40px;width: 400px;font-size: 27px;text-align: center;margin-top: 10px;"></br>
+				<input type="submit" name="submit" value="Assign" style="height: 50px;width: 150px;font-size: 25px;margin-top: 10px;background-color: #3ccedd;" onclick="list()">
 			</form>
 		</div>
 	</div>

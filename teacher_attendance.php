@@ -51,10 +51,8 @@
 	</div>
 	<p style="font-size: 24px;font-weight: 800;padding: 10px;margin-top: 10px;text-align: center;background-color: #5b4141; color: white;"><?php 
 		echo "Course No: " . $_SESSION['courseno'] . "&nbsp,&nbsp" ."Course Title : ". $_SESSION[$_SESSION['courseno']];?></p>
-	<div style="background-color: white; box-shadow: 0px 1px 1px 1px #0ff; margin-top: -15px; padding-bottom: 15px;">
 	
-	</div>
-	<div style="margin-top: 10px;">
+	<div style="margin-top: -10px;">
 		<ul>
 			<li><a href="course_process.php">Students List </a></li>
 			<li><a class="active" href="teacher_attendance.php">Attendance</a></li>
