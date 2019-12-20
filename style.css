@@ -1,3 +1,8 @@
+body{
+  
+  min-height: 100%;
+  background-color: #858ea1;
+}
 header{
   background-color:#e6e9ef; 
   min-height: 70px;
@@ -222,4 +227,8 @@ nav {
       font-size: 22px;
       background-color:#e36969;
       margin-top: -2px;
+    }
+    footer {
+      grid-row-start: 2;
+      grid-row-end: 3;
     }

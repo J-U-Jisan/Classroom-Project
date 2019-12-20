@@ -26,7 +26,7 @@
 	<link rel="stylesheet" type="text/css" href="nav.css">
 	<title><?php echo $_SESSION['userid'].'(Student)'?></title>
 </head>
-<body style="background-color: #858ea1;">
+<body>
 	<div style="background-image: linear-gradient(90deg,#fff,#7effa4,60%,#ec69cb);">
 		<span style="margin-left: 5%; font-size: 35px; font-weight: bold;">Teacher's Zone</span>
 		<a href="signout.php" class="hsign"><span style="float: right;font-size:23px;margin-right: 3%;">Sign Out</span></a>
@@ -68,52 +68,42 @@
 	<div style="margin-top: 10px;">
 		<ul>
 			<li><a href="student.php">Home</a></li>
-			<li><a class="active" href="student_attendance.php">Attendance</a></li>
+			<li><a href="student_attendance.php">Attendance</a></li>
 			<li><a href="assignment_list.php">Assignment</a></li>
 			<li><a href="project_list.php">Project</a></li>
-			<li><a href="mark_list.php">Mark</a></li>
+			<li><a class="active" href="mark_list.php">Mark</a></li>
 		</ul>
 	</div>
 
-	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;text-align: center; min-height: 315px;" id="attendanceid">
+	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;text-align: center;min-height: 315px;">
 		<?php
-			$url = "http://127.0.0.1/apipro/attendance/read.php";
+			$url = "http://127.0.0.1/apipro/marks/read.php";
 			$json = file_get_contents($url);
 			$contents = json_decode($json,true);
 			$data = $contents['records'];
-			$no=0;
-			$val = $data;
-			$total = -1;
-			$present = 0;
+			$no =0;
 			foreach ($data as $key => $value) {
-				if($_SESSION['userid']==$value['studentid'] && $_SESSION['courseno']==$value['courseno']){
-					$total++;
-					if($value['present']==1)$present++;
-				}
-			}
-			$percent = ceil(($present*100)/$total);
-
-			foreach ($data as $key => $value) {
-				if($_SESSION['userid']==$value['studentid'] && $_SESSION['courseno']==$value['courseno'] && $value['day']!='0001-01-01'){
+				if($value['studentid']==$_SESSION['userid'] && $value['courseno']==$_SESSION['courseno'] && $value['topic']!='111'){
 					?>
-					<div style="background-color: #00ff4c;padding: 11px;font-size: 22px;width: 7%;float:left;margin-left: 8%;"><?php echo 'No: '.++$no;?></div>
-					<div style="background-color: #b5a7e8;padding: 11px;font-size: 22px;width: 10%;float:left;overflow: hidden;"><?php echo $value['day']?></div>
-					<div style="background-color: #00ff58;padding: 11px;font-size: 22px;width: 10%;float:left;overflow: hidden;"><?php echo $value['studentid']?></div>
-					
-					<button class="attendbutton" id="presentid" name="present" style="margin-left: 60px !important; <?php if($value['present']==1){?> background-color: #40ca23 !important;<?php } ?>" value="<?php echo $value['studentid'];?>">Present</button>
-					<button class="attendbutton" id="absentid" name="absent" value="<?php echo $value['studentid'];?>" style="<?php if($value['present']==2){?> background-color: #40ca23 !important;<?php } ?>">Absent</button>
-
-					<div style="margin-left: 75%;background-color: #00ff58;padding: 11px;font-size: 22px;width: 13%;overflow:hidden;"><?php 
-
-					 $percent = ceil(($present*100)/$total);
-					 echo "Percentage: ".$percent. "%"?></div>	
-					</br>
-				<?php
+					<div style="margin: 0 auto;background-color: #a290e3; padding: 10px;margin-top: 10px;display: inline-block;font-size: 22px;width: 8%;">
+						<?php
+							echo "NO: " . ++$no;
+						?> 
+					</div>
+					<div style="margin: 0 auto;background-color: #a290e3; padding: 10px;margin-top: 10px;display: inline-block;font-size: 22px;width: 20%;">
+						<?php 
+							echo  $value['topic'];
+						?>
+					</div>
+					<div style="margin: 0 auto;background-color: #a290e3; padding: 10px;margin-top: 10px;display: inline-block;font-size: 22px;width: 20%;">
+						<?php
+							echo 'Mark: '.$value['mark'] .' ('.$value['outof'].')';
+						?>
+					</div>
+					<?php
 				}
 			}
-					
 		?>
-
 	</div>
 	<footer>
 	<div style="background-image: linear-gradient(180deg,#eabdbd,#7effa4,60%,#a2a87a);padding: 10px;margin-top: 10px;text-align: center;">

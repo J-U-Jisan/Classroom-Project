@@ -10,7 +10,7 @@
 </head>
 <body style="background-color: #858ea1;" onload="list()">
 	<div style="background-image: linear-gradient(90deg,#fff,#7effa4,60%,#ec69cb);">
-		<span style="margin-left: 5%; font-size: 35px; font-weight: bold;">Teachers Zone</span>
+		<span style="margin-left: 5%; font-size: 35px; font-weight: bold;">Teacher's Zone</span>
 		<a href="signout.php" class="hsign"><span style="float: right;font-size:23px;margin-right: 3%;">Sign Out</span></a>
 		<span style="float: right;font-size: 23px;">|&nbsp</span>
 		<a href="teacher.php" class="hsign"><span style="float: right;font-size: 23px;">
@@ -32,7 +32,7 @@
 			<li><a href="mark.php">Mark</a></li>
 		</ul>
 	</div>
-	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#ec69cb);padding: 10px;margin-top: 10px;">
+	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#ec69cb);padding: 10px;margin-top: 10px;min-height: 350px;">
 		<h2 style="text-align: center;"><?php echo $_POST['topic'];?> </h2>
 		<?php
 			$url = "http://127.0.0.1/apipro/project/read.php";
@@ -77,5 +77,16 @@
 			}
 		?>
 	</div>
+	<footer>
+	<div style="background-image: linear-gradient(180deg,#eabdbd,#7effa4,60%,#a2a87a);padding: 10px;margin-top: 10px;text-align: center;">
+		
+		<hr>
+		<a href="home.php">Teacher's Zone </a>© Copyright 2019-<?php echo date("Y").' ';?> Jalal Uddin Jisan
+		<br>
+		Server time:<?php $timezone = date_default_timezone_set('Asia/Dhaka');
+		$date = date('d/m/Y h:i:s A',time());
+		echo ' '.$date;?>
+	
+	</div></footer>
 </body>
 </html>

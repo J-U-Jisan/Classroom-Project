@@ -58,7 +58,7 @@
 </head>
 <body style="background-image: linear-gradient(90deg,#fff,#99bee6,60%,#e1b7b7);">
     <div id="Frame0">
-		  <h1 align="center" color="green">Teachers Zone</h1>
+		  <h1 align="center" color="green">Teacher's Zone</h1>
 		  <h3 align="center" color="green">Connect teachers and students</h3>
 	</div>
 <br>
@@ -86,10 +86,6 @@
 	      </td>
 	      <td><input type="radio" name="type" style="display:inline;" value="Teacher" required>Teacher
 	      	&nbsp&nbsp&nbsp&nbsp<input type="radio" name="type" style="display: inline"value="Student" required>Student</td>
-	    </tr>
-	    <tr>
-	      <td>&nbsp;</td>
-	      <td style="font-style:italic;"><input type="checkbox" name="remember"> Remember Me</td>
 	    </tr>
 	    <tr>
 	      <td>&nbsp;</td>

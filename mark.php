@@ -1,11 +1,11 @@
 <?php
 	session_start();
-/*
-	if (isset($_POST['studentbutton'])) {
-		$_SESSION['day']=$_POST['studentbutton'];
-		header('location:take_attendance.php');
+
+	if (isset($_POST['markbutton'])) {
+		$_SESSION['topic']=$_POST['markbutton'];
+		header('location:take_mark.php');
 	}
-*/
+
 	if(isset($_POST['submit'])){
 		include('./Requests/library/Requests.php');
 		Requests::register_autoloader();
@@ -13,6 +13,7 @@
 		$courseno=$_SESSION['courseno'];
 		$teacherid=$_SESSION['userid'];
 		$admin_id=$_SESSION['adminid'];
+		$outof = $_POST['outof'];
 		$mark=0;
 
 		$url = "http://127.0.0.1/apipro/assign_student/read.php";
@@ -21,7 +22,7 @@
 		$data = $contents['records'];
 		foreach ($data as $key => $value) {
 			if($value['courseno']==$courseno && $value['admin_id']==$admin_id){
-				$item = array('teacherid' => $teacherid,'studentid' => $value['studentid'],'courseno' => $courseno, 'topic' => $topic,'mark' => $mark);		
+				$item = array('teacherid' => $teacherid,'studentid' => $value['studentid'],'courseno' => $courseno, 'topic' => $topic,'mark' => $mark, 'outof' => $outof);		
 		
 				$response = Requests::post('http://127.0.0.1/apipro/marks/create.php', array(), $item);
 				var_dump($response->body);
@@ -60,7 +61,7 @@
 			
 		</ul>
 	</div>
-	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;text-align: center;" id="classid">
+	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;text-align: center;min-height: 350px;" id="classid">
 		<button class="button" title="Add Subject" onclick="addday()">+</button>
 		<?php
 			$url = "http://127.0.0.1/apipro/marks/read.php";
@@ -78,8 +79,8 @@
 			$topic = array_unique($ar);
 			foreach ($topic as $key => $value) {
 				?>
-				<form method="post" action="take_mark.php">
-					<button name="markbutton"id="studentbutton" value="<?php echo $value; ?>">
+				<form method="post" action="">
+					<button name="markbutton"id="studentbutton" value="<?php echo $value; ?>" style="cursor:pointer;">
 						<div style="display: inline-block;background-color: #91b0e1;width: 100px;margin-left: -26px;padding: 19px;"><?php echo 'No: '.++$no;?></div><div style="background-color: #508cea;display: inline-block;width: 390px;margin-right: -25px;padding-top: 19px;padding-bottom: 19px;"><?php echo $value;?></div>
 					</button>
 				</form>
@@ -89,14 +90,29 @@
 	</div>
 	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;text-align: center;" id="dateid">
 		<h1>Add Subject</h1>
-		<form method="post" action="take_mark.php">
-			<label style="font-size: 22px;">Name<font style="color:red;">*</font>:&nbsp&nbsp&nbsp</label>
-			<input type="text" name="topic" style="width:40%;height:50px;font-size: 25px;" placeholder="Enter name">
-			<br>
+		<form method="post" action="">
+			<label style="font-size: 22px;">Name<font style="color:red;">*</font>:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+			<input type="text" name="topic" style="width:40%;height:50px;font-size: 25px;display:inline-block;" placeholder="Enter name">
+			</br>
+			<label style="font-size: 22px;margin-top: 10px;margin-left: -21px;">Total Mark<font style="color:red;">*</font>:</label>
+			<input type="text" name="outof" placeholder="Enter Total Mark" style="width:40%;height:50px;font-size: 25px;display:inline-block;margin-top: 10px;margin-left: 6px;">
+			</br>
+
 			<input type="submit" name="submit" value="Save" style="width:10%;font-size: 22px;margin-top: 5px;background-color: #62b59d;padding: 6px;" onclick="addclass()">
 		</form> 
 	</div>
 	
+	<footer>
+	<div style="background-image: linear-gradient(180deg,#eabdbd,#7effa4,60%,#a2a87a);padding: 10px;margin-top: 10px;text-align: center;">
+		
+		<hr>
+		<a href="home.php">Teacher's Zone </a>© Copyright 2019-<?php echo date("Y").' ';?> Jalal Uddin Jisan
+		<br>
+		Server time:<?php $timezone = date_default_timezone_set('Asia/Dhaka');
+		$date = date('d/m/Y h:i:s A',time());
+		echo ' '.$date;?>
+	
+	</div></footer>
 
 	<script type="text/javascript">
 		function addday() {

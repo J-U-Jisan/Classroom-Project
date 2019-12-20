@@ -51,7 +51,7 @@
 </head>
 <body style="background-color: #858ea1;">
 	<div style="background-color: #b0d791;">
-		<span style="margin-left: 5%; font-size: 35px; font-weight: bold;">Teachers Zone</span>
+		<span style="margin-left: 5%; font-size: 35px; font-weight: bold;">Teacher's Zone</span>
 		<a href="signout.php" class="hsign"><span style="float: right;font-size:23px;margin-right: 3%;">Sign Out</span></a>
 		<span style="float: right;font-size: 23px;">|&nbsp</span>
 		<a href="admin.php" class="hsign"><span style="float: right;font-size: 23px;"><?php echo $_SESSION['userid'] . "&nbsp";?></span></a>

@@ -36,7 +36,7 @@
 </head>
 <body style="background-color: #858ea1;" onload="list()">
 	<div style="background-image: linear-gradient(90deg,#fff,#7effa4,60%,#ec69cb);">
-		<span style="margin-left: 5%; font-size: 35px; font-weight: bold;">Teachers Zone</span>
+		<span style="margin-left: 5%; font-size: 35px; font-weight: bold;">Teacher's Zone</span>
 		<a href="signout.php" class="hsign"><span style="float: right;font-size:23px;margin-right: 3%;">Sign Out</span></a>
 		<span style="float: right;font-size: 23px;">|&nbsp</span>
 		<a href="teacher.php" class="hsign"><span style="float: right;font-size: 23px;">
@@ -58,7 +58,7 @@
 			<li><a href="mark.php">Mark</a></li>
 		</ul>
 	</div>
-	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#ec69cb);padding: 10px;margin-top: 10px;">
+	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#ec69cb);padding: 10px;margin-top: 10px;min-height: 350px;">
 		<div id="list">
 			<button class="button" title="Assign Assignment" onclick="assign()">+</button>
 		<?php
@@ -72,18 +72,16 @@
 			foreach ($data as $key => $value) {
 				if($value['topic']=='111')continue;
 				if($value['teacherid']==$_SESSION['userid']){
-					$flag = false;
-					if(sizeof($ar)==0){
-						array_push($ar, $value['topic']);
-						$flag=true;
-					}
-					else{
-						if($ar[sizeof($ar)-1]!=$value['topic']){
-							array_push($ar, $value['topic']);
-							$flag=true;
+					$flag = true;
+					foreach ($ar as $key1 => $value1) {
+						if($value['topic']==$value1){
+							$flag = false;
+							break;
 						}
 					}
+					
 					if($flag){
+						array_push($ar, $value['topic']);
 						?>
 						<form action="take_assignment.php" method="post">
 						<button style="margin: 0 auto;padding: 10px;background-color: #044c68;font-size: 24px;width:60%;margin-top: 10px;color: white;display: block;text-align: left;cursor: pointer;" value="<?php echo $value['topic'];?>" name="topic">
@@ -118,6 +116,18 @@
 			</form>
 		</div>
 	</div>
+
+	<footer>
+	<div style="background-image: linear-gradient(180deg,#eabdbd,#7effa4,60%,#a2a87a);padding: 10px;margin-top: 10px;text-align: center;">
+		
+		<hr>
+		<a href="home.php">Teacher's Zone </a>© Copyright 2019-<?php echo date("Y").' ';?> Jalal Uddin Jisan
+		<br>
+		Server time:<?php $timezone = date_default_timezone_set('Asia/Dhaka');
+		$date = date('d/m/Y h:i:s A',time());
+		echo ' '.$date;?>
+	
+	</div></footer>
 	<script type="text/javascript">
 		function list() {
 			document.getElementById("list").style.display = "block";

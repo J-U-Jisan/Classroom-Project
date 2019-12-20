@@ -1,5 +1,16 @@
 <?php
 	session_start();
+	if (isset($_POST['submit'])) {
+		include('./Requests/library/Requests.php');
+		Requests::register_autoloader();
+
+		$mark = $_POST['mark'];
+		$id = $_POST['id'];
+
+		$item = array('id' => $id, 'mark' => $mark);
+		$response = Requests::post('http://127.0.0.1/apipro/marks/update.php', array(), $item);
+		var_dump($response->body);
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,8 +43,8 @@
 			
 		</ul>
 	</div>
-	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;text-align: center;">
-		<h2><?php echo $_POST['markbutton']?></h2>
+	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;text-align: center;min-height: 350px;">
+		<h2><?php echo $_SESSION['topic']?></h2>
 		<?php
 			$url = "http://127.0.0.1/apipro/marks/read.php";
 			$json = file_get_contents($url);
@@ -41,7 +52,7 @@
 			$data = $contents['records'];
 			$no = 0;
 			foreach ($data as $key => $value) {
-				if($value['topic']==$_POST['markbutton'] && $value['teacherid']==$_SESSION['userid'] && $value['courseno']==$_SESSION['courseno']){
+				if($value['topic']==$_SESSION['topic'] && $value['teacherid']==$_SESSION['userid'] && $value['courseno']==$_SESSION['courseno']){
 					?>
 					<div style="background-color: #00ff22;margin:0 auto;padding: 10px;margin-top: 10px;width: 5%;font-size: 22px;display: inline-block;">
 						<?php echo "NO: ". ++$no;?>
@@ -49,8 +60,18 @@
 					<div style="background: #00ff22; margin: 0 auto;display: inline; padding: 10px;width: 12%;margin-top:10px;font-size: 22px;">
 						<?php echo "Roll: ". $value['studentid']; ?>
 					</div>
-					<div>
-						
+					<div style="font-size: 22px;display: inline;margin: 0 auto;width: 30%;background-color: #00ff22;padding:10px; margin-top: 10px;margin-left: 5px;">
+						<?php
+							echo "Total Mark: " . $value['outof'];
+						?>
+					</div>
+					<div style="font-size: 22px;display: inline;margin: 0 auto;width: 30%;background-color: #00ff22;padding:10px; margin-top: 10px;margin-left: 5px;">
+						<form method="post" action="" style="display: inline;">
+							<input type="hidden" name="id" value="<?php echo $value['id'];?>">
+							Mark:
+							<input type="text" name="mark" value="<?php echo $value['mark'];?>" style="font-size: 20px;width: 10%; height: 25px;text-align: center;">
+							<input type="submit" name="submit" value="Submit" style="font-size: 20px;">
+						</form>
 					</div>
 				</br>
 				<?php
@@ -58,5 +79,16 @@
 			}
 		?>
 	</div>
+	<footer>
+	<div style="background-image: linear-gradient(180deg,#eabdbd,#7effa4,60%,#a2a87a);padding: 10px;margin-top: 10px;text-align: center;">
+		
+		<hr>
+		<a href="home.php">Teacher's Zone </a>© Copyright 2019-<?php echo date("Y").' ';?> Jalal Uddin Jisan
+		<br>
+		Server time:<?php $timezone = date_default_timezone_set('Asia/Dhaka');
+		$date = date('d/m/Y h:i:s A',time());
+		echo ' '.$date;?>
+	
+	</div></footer>
 </body>
 </html>

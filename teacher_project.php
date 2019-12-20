@@ -36,7 +36,7 @@
 </head>
 <body style="background-color: #858ea1;" onload="list()">
 	<div style="background-image: linear-gradient(90deg,#fff,#7effa4,60%,#ec69cb);">
-		<span style="margin-left: 5%; font-size: 35px; font-weight: bold;">Teachers Zone</span>
+		<span style="margin-left: 5%; font-size: 35px; font-weight: bold;">Teacher's Zone</span>
 		<a href="signout.php" class="hsign"><span style="float: right;font-size:23px;margin-right: 3%;">Sign Out</span></a>
 		<span style="float: right;font-size: 23px;">|&nbsp</span>
 		<a href="teacher.php" class="hsign"><span style="float: right;font-size: 23px;">
