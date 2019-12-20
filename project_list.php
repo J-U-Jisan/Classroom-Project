@@ -16,7 +16,7 @@
 
 		
 		$item = array('id' => $id, 'given' => $given);
-		$response = Requests::post('http://127.0.0.1/apipro/give_assignment/update.php', array(), $item);
+		$response = Requests::post('http://127.0.0.1/apipro/project/update.php', array(), $item);
 		var_dump($response->body);
 
 		$teacherid = $_POST['teacherid'];
@@ -29,12 +29,12 @@
 			$fileinfo = pathinfo($_FILES['file']['name']);
     		$extension = $fileinfo['extension'];
 			$value = array('studentid' => $studentid, 'teacherid' => $teacherid, 'courseno' => $courseno, 'name' => $name, 'tempname' => $tempfilename, 'extension' => $extension);
-			$response = Requests::post('http://127.0.0.1/apipro/upload.php',array(), $value);
+			$response = Requests::post('http://127.0.0.1/apipro/upload_project.php',array(), $value);
 		}
 		else{
 			$drive = $_POST['drive'];
 			$value = array('studentid' => $studentid, 'teacherid' => $teacherid, 'courseno' => $courseno, 'name' =>$name, 'drive' => $drive);
-			$response = Requests::post('http://127.0.0.1/apipro/upload_link.php',array(), $value);	
+			$response = Requests::post('http://127.0.0.1/apipro/upload_project_link.php',array(), $value);	
 		}
 		
 		var_dump($response->body);
@@ -81,14 +81,14 @@
 		<ul>
 			<li><a href="student.php">Home</a></li>
 			<li><a href="student_attendance.php">Attendance</a></li>
-			<li><a class="active" href="assignment_list.php">Assignment</a></li>
-			<li><a href="project_list.php">Project</a></li>
+			<li><a href="assignment_list.php">Assignment</a></li>
+			<li><a class="active" href="project_list.php">Project</a></li>
 			<li><a href="mark_list.php">Mark</a></li>
 		</ul>
 	</div>
 	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;" id="attendanceid">
 		<?php
-			$url = "http://127.0.0.1/apipro/give_assignment/read.php";
+			$url = "http://127.0.0.1/apipro/project/read.php";
 			$json = file_get_contents($url);
 			$contents = json_decode($json,true);
 			$data = $contents['records'];

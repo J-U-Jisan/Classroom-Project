@@ -20,11 +20,11 @@
 		foreach ($data as $key => $value) {
 			if($value['courseno']==$courseno && $value['admin_id']==$admin_id){
 				$item = array('teacherid' => $teacherid,'studentid' => $value['studentid'],'courseno' => $courseno,'topic' => $topic,'given' => $given,'deadline' => $deadline);
-				$response = Requests::post('http://127.0.0.1/apipro/give_assignment/create.php', array(), $item);
+				$response = Requests::post('http://127.0.0.1/apipro/project/create.php', array(), $item);
 	 			var_dump($response->body);
 			}
 		}
-		header('location:teacher_assignment.php');
+		header('location:project.php');
 	}
 ?>
 <!DOCTYPE html>
@@ -53,16 +53,16 @@
 			<li><a href="teacher.php">Home</a></li>
 			<li><a href="course_process.php">Students List</a></li>
 			<li><a href="teacher_attendance.php">Attendance</a></li>
-			<li><a class="active" href="teacher_assignment.php">Assignment</a></li>
-			<li><a href="project.php">Project</a></li>
+			<li><a href="teacher_assignment.php">Assignment</a></li>
+			<li><a class="active" href="project.php">Project</a></li>
 			<li><a href="mark.php">Mark</a></li>
 		</ul>
 	</div>
 	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#ec69cb);padding: 10px;margin-top: 10px;">
 		<div id="list">
-			<button class="button" title="Assign Assignment" onclick="assign()">+</button>
+			<button class="button" title="Assign Project" onclick="assign()">+</button>
 		<?php
-			$url = "http://127.0.0.1/apipro/give_assignment/read.php";
+			$url = "http://127.0.0.1/apipro/project/read.php";
 			$json = file_get_contents($url);
 			$contents = json_decode($json,true);
 			$data = $contents['records'];
@@ -85,18 +85,19 @@
 					}
 					if($flag){
 						?>
-						<form action="take_assignment.php" method="post">
-						<button style="margin: 0 auto;padding: 10px;background-color: #044c68;font-size: 24px;width:60%;margin-top: 10px;color: white;display: block;text-align: left;cursor: pointer;" value="<?php echo $value['topic'];?>" name="topic">
+						<form method="post" action="take_project.php">
+						<button style="margin: 0 auto;padding: 10px;background-color: #101779;font-size: 24px;width:60%;margin-top: 10px;color: white;display: block;text-align: left;cursor: pointer;"value="<?php echo $value['topic'];?>" name="topic">
 							<div style="float: left;">
 							<?php
 								echo "No: ".++$no; 
 							?>
 							</div>
-							<div style="float: right;"><?php echo "Date of Submission: ";?><span style="color:#25eaa9;"><?php echo $value['deadline'];?></span></div>
+							<div style="float: right;"><?php echo "Date of Submission: ".$value['deadline'];?></div>
 							<br>
 							<div style="padding-top: 7px;float: left;">
 							<?php
-								echo "Topic: ";?><span style="color:#3eea25;"><?php echo $value['topic']; ?> </span> 
+								echo "Topic: ".$value['topic']; 
+							?>
 							</div>
 						
 						</button>

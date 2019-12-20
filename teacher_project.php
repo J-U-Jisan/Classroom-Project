@@ -85,22 +85,18 @@
 					}
 					if($flag){
 						?>
-						<form action="take_assignment.php" method="post">
-						<button style="margin: 0 auto;padding: 10px;background-color: #044c68;font-size: 24px;width:60%;margin-top: 10px;color: white;display: block;text-align: left;cursor: pointer;" value="<?php echo $value['topic'];?>" name="topic">
-							<div style="float: left;">
+						<div style="margin:auto;padding: 10px;background-color: #044c68;font-size: 24px;width:60%;margin-top: 10px;color: white;">
 							<?php
 								echo "No: ".++$no; 
 							?>
-							</div>
-							<div style="float: right;"><?php echo "Date of Submission: ";?><span style="color:#25eaa9;"><?php echo $value['deadline'];?></span></div>
+							<span style="float: right;"><?php echo "Date of Submission: ".$value['deadline'];?></span>
 							<br>
-							<div style="padding-top: 7px;float: left;">
+							<div style="padding-top: 7px;">
 							<?php
-								echo "Topic: ";?><span style="color:#3eea25;"><?php echo $value['topic']; ?> </span> 
+								echo "Topic: ".$value['topic']; 
+							?>
 							</div>
-						
-						</button>
-						</form>
+						</div>
 					<?php
 					}
 				}

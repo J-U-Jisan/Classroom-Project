@@ -1,5 +1,21 @@
 <?php
 	session_start();
+	if(isset($_POST['coursebutton'])){
+		$temp=$_POST['coursebutton'];
+		$courseno="";
+		$coursetitle="";
+		for($idx=0;$idx<strlen($temp);$idx++){
+			if($temp[$idx]=='-' && $temp[$idx+1]=='>'){
+				$coursetitle = substr($temp, $idx+2);
+				break;
+			}
+			else $courseno = $courseno . $temp[$idx];
+		}
+		$_SESSION['courseno'] = $courseno;
+		$_SESSION[$courseno] = $coursetitle;
+
+		header('location:course_process.php');
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,10 +52,8 @@
 						if($course['courseno']==$value['courseno'] && $course['admin_id']==$value['admin_id']){
 								
 								?>
-								<form method="post" action="course_process.php">
-									<button id="coursebutton" name="coursebutton" value="<?php echo $value['courseno'];?>"> <?php echo "Course No: " . $value['courseno'] . "</br>Course Title: " . $course['coursetitle'];
-									$courseno = $value['courseno'];
-									$_SESSION[$courseno]=$course['coursetitle'];
+								<form method="post" action="">
+									<button id="coursebutton" name="coursebutton" value="<?php echo $value['courseno'].'->'.$course['coursetitle'];?>"> <?php echo "Course No: " . $value['courseno'] . "</br>Course Title: " . $course['coursetitle'];
 									?></button>			
 								</form>
 						<?php

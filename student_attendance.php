@@ -5,7 +5,18 @@
 	session_start();
 
 	if(isset($_POST['coursebutton'])){
-		$_SESSION['courseno'] =$_POST['coursebutton'];
+		$temp=$_POST['coursebutton'];
+		$courseno="";
+		$coursetitle="";
+		for($idx=0;$idx<strlen($temp);$idx++){
+			if($temp[$idx]=='-' && $temp[$idx+1]=='>'){
+				$coursetitle = substr($temp, $idx+2);
+				break;
+			}
+			else $courseno = $courseno . $temp[$idx];
+		}
+		$_SESSION['courseno'] = $courseno;
+		$_SESSION[$courseno] = $coursetitle;
 	}
 ?>
 <!DOCTYPE html>
@@ -59,8 +70,8 @@
 			<li><a href="student.php">Home</a></li>
 			<li><a class="active" href="student_attendance.php">Attendance</a></li>
 			<li><a href="assignment_list.php">Assignment</a></li>
-			<li><a href="project.php">Project</a></li>
-			<li><a href="mark.php">Mark</a></li>
+			<li><a href="project_list.php">Project</a></li>
+			<li><a href="mark_list.php">Mark</a></li>
 		</ul>
 	</div>
 
@@ -89,11 +100,10 @@
 					<div style="background-color: #b5a7e8;padding: 11px;font-size: 22px;width: 10%;float:left;overflow: hidden;"><?php echo $value['day']?></div>
 					<div style="background-color: #00ff58;padding: 11px;font-size: 22px;width: 10%;float:left;overflow: hidden;"><?php echo $value['studentid']?></div>
 					
-					<button class="attendbutton" id="presentid" name="present" style="margin-left: 13px !important; <?php if($value['present']==1){?> background-color: #40ca23 !important;<?php } ?>" value="<?php echo $value['studentid'];?>">Present</button>
+					<button class="attendbutton" id="presentid" name="present" style="margin-left: 60px !important; <?php if($value['present']==1){?> background-color: #40ca23 !important;<?php } ?>" value="<?php echo $value['studentid'];?>">Present</button>
 					<button class="attendbutton" id="absentid" name="absent" value="<?php echo $value['studentid'];?>" style="<?php if($value['present']==2){?> background-color: #40ca23 !important;<?php } ?>">Absent</button>
-					<button class="attendbutton" id="leaveid" name="leave" value="<?php echo $value['studentid'];?>" style="<?php if($value['present']==3){?> background-color: #40ca23 !important;<?php } ?>">Leave/Excuse</button>
 
-					<div style="margin-left: 78%;background-color: #00ff58;padding: 11px;font-size: 22px;width: 13%;overflow:hidden;"><?php 
+					<div style="margin-left: 75%;background-color: #00ff58;padding: 11px;font-size: 22px;width: 13%;overflow:hidden;"><?php 
 
 					 $percent = ceil(($present*100)/$total);
 					 echo "Percentage: ".$percent. "%"?></div>	

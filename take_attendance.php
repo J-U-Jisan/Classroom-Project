@@ -55,11 +55,13 @@
 	
 	<div style="margin-top: -10px;">
 		<ul>
+			<li><a href="teacher.php">Home</a></li>
 			<li><a href="course_process.php">Students List </a></li>
 			<li><a class="active" href="teacher_attendance.php">Attendance</a></li>
 			<li><a href="teacher_assignment.php">Assignment</a></li>
-			<li><a href="exam.php">Exam</a></li>
 			<li><a href="project.php">Project</a></li>
+			<li><a href="mark.php">Mark</a></li>
+			
 		</ul>
 	</div>
 
@@ -89,11 +91,10 @@
 					<div style="background-color: #b5a7e8;padding: 11px;font-size: 22px;width: 10%;float:left;overflow: hidden;"><?php echo $value['day']?></div>
 					<div style="background-color: #00ff58;padding: 11px;font-size: 22px;width: 10%;float:left;overflow: hidden;"><?php echo $value['studentid']?></div>
 					
-					<button class="attendbutton" id="presentid" name="present" style="margin-left: 13px !important; <?php if($value['present']==1){?> background-color: #40ca23 !important;<?php } ?>" value="<?php echo $value['studentid'];?>">Present</button>
+					<button class="attendbutton" id="presentid" name="present" style="margin-left: 60px !important; <?php if($value['present']==1){?> background-color: #40ca23 !important;<?php } ?>" value="<?php echo $value['studentid'];?>">Present</button>
 					<button class="attendbutton" id="absentid" name="absent" value="<?php echo $value['studentid'];?>" style="<?php if($value['present']==2){?> background-color: #40ca23 !important;<?php } ?>">Absent</button>
-					<button class="attendbutton" id="leaveid" name="leave" value="<?php echo $value['studentid'];?>" style="<?php if($value['present']==3){?> background-color: #40ca23 !important;<?php } ?>">Leave/Excuse</button>
 
-					<div style="margin-left: 78%;background-color: #00ff58;padding: 11px;font-size: 22px;width: 13%;overflow:hidden;"><?php 
+					<div style="margin-left: 75%;background-color: #00ff58;padding: 11px;font-size: 22px;width: 13%;overflow:hidden;"><?php 
 
 					 $percent = ceil(($present*100)/$total);
 					 echo "Percentage: ".$percent. "%"?></div>

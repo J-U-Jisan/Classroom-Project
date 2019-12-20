@@ -37,9 +37,7 @@
 								
 								?>
 								<form method="post" action="student_attendance.php">
-									<button id="coursebutton" name="coursebutton" value="<?php echo $value['courseno'];?>"> <?php echo "Course No: " . $value['courseno'] . "</br>Course Title: " . $course['coursetitle'];
-									$courseno = $value['courseno'];
-									$_SESSION[$courseno]=$course['coursetitle'];
+									<button id="coursebutton" name="coursebutton" value="<?php echo $value['courseno'].'->'.$course['coursetitle'];?>"> <?php echo "Course No: " . $value['courseno'] . "</br>Course Title: " . $course['coursetitle'];
 									?></button>			
 								</form>
 						<?php
