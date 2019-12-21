@@ -1,19 +1,30 @@
-<?php 
-	session_start();
+<?php
+	session_start(); 
 	if(isset($_POST['submit'])){
 		include('./Requests/library/Requests.php');
 		Requests::register_autoloader();
 
-		$courseno = $_POST['courseno'];
-		$teacherid = $_POST['teacherid'];
+		$userid = $_POST['teacherid'];
 		$admin_id = $_POST['admin_id'];
 
-		$data = array('courseno' => $courseno, 'teacherid' => $teacherid, 'admin_id' => $admin_id);		
+		$data = array('userid' => $userid, 'admin_id' => $admin_id);
 		
-		$response = Requests::post('http://127.0.0.1/apipro/assign_teacher/create.php', array(), $data);
-		var_dump($response->body);
-		//header('location:course_list.php');	
-	}
+		$response = Requests::post('http://127.0.0.1/apipro/teachers/delete.php', array(), $data);
+		var_dump($response->body); 
+
+		$url = "http://127.0.0.1/apipro/assign_teacher/read.php";
+		$json = file_get_contents($url);
+		$contents = json_decode($json,true);
+		$data = $contents['records'];
+		foreach ($data as $key => $value){
+		 	if($value['teacherid']==$userid){
+		 		$data = array('courseno' => $courseno, 'teacherid' => $value['teacherid'], 'admin_id' => $admin_id);		
+				$response = Requests::post('http://127.0.0.1/apipro/assign_teacher/delete.php', array(), $data);
+				var_dump($response->body);
+		 	}
+		}
+		header('location:teachers_list.php');
+	}	
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,11 +85,11 @@
 		    </div>
 		    </div>
 			<div class="dropdown" style="margin-left: 10px;">
-		    <button class="dropbtn" style="color:blue;">Assign Course 
+		    <button class="dropbtn">Assign Course 
 		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
 		    </button>
 		    <div class="dropdown-content">
-		      <a href="#">to Teacher</a>
+		      <a href="assign_course_teacher.php">to Teacher</a>
 		      <a href="assign_course_student.php">to Student</a>
 		      
 		    </div>
@@ -91,7 +102,7 @@
 		    <div class="dropdown-content">
 		      <a href="courseregister.php">Add Course</a>
 		      <a href="course_list.php">Course List</a>
-		      <a href="delete_course.php">Delete Couse</a>
+		      <a href="#">Delete Couse</a>
 		    </div>
 		    </div>
 
@@ -107,7 +118,7 @@
 		    </div>
 
 		    <div class="dropdown">
-		    <button class="dropbtn">Teacher 
+		    <button class="dropbtn" style="color:blue;">Teacher 
 		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
 		    </button>
 		    <div class="dropdown-content">
@@ -119,19 +130,17 @@
 			
 		</nav>
 	</header>
-	<div style="min-height: 415px;">
+	<div style="min-height: 400px;">
 	<div id="Frame0">
-		<h2 style="text-align: center;">Assign Course To Teacher</h2>
+		<h2 style="text-align: center;">Delete Teacher</h2>
 	</div>
 	<div id="Frame0">
 		<form action="" method="post">
-			<label>Course No<font style="color:red;">*</font></label>
-			<input type="text" name="courseno" id="courseno" placeholder="Enter Your Course No..." required>
 			<label>Teacher Id<font style="color:red;">*</font></label>
-			<input type="text" name="teacherid" id="teacherid" placeholder="Enter teacher id..." required>
+			<input type="text" name="teacherid" id="teacherid" placeholder="Enter teacher id..."required>
 			
 			<input type="hidden" name="admin_id" id="admin_id" value="<?php echo $_SESSION['userid'];?>">
-			<input type="submit" name="submit"id="submit" value="Submit">
+			<input type="submit" name="submit"id="submit" value="Delete">
 		</form>
 	</div>
 	</div>

@@ -61,7 +61,8 @@
 			
 		</ul>
 	</div>
-	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;text-align: center;min-height: 350px;" id="classid">
+	<div style="min-height: 375px;">
+	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;text-align: center;" id="classid">
 		<button class="button" title="Add Day" onclick="addday()">+</button>
 		<?php
 			$url = "http://127.0.0.1/apipro/attendance/read.php";
@@ -97,7 +98,7 @@
 			<input type="submit" name="submit" value="Save" style="width:10%;font-size: 22px;margin-top: 5px;background-color: #62b59d;padding: 6px;" onclick="addclass()">
 		</form> 
 	</div>
-	
+	</div>
 	<footer>
 	<div style="background-image: linear-gradient(180deg,#eabdbd,#7effa4,60%,#a2a87a);padding: 10px;margin-top: 10px;text-align: center;">
 		

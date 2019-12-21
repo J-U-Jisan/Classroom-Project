@@ -62,24 +62,63 @@
 	<header>
 		<nav>
 			<a class="hsign" href="admin.php">Home</a>
-			<a class="hsign" href="teachers_list.php">Teachers List</a>
-			<a class="hsign" href="teacherregister.php">Admit Teachers</a>
-			<a class="hsign" href="students_list.php">Students List</a>
-			<a class="hsign" href="studentregister.php">Admit Student</a>
-			<a class="hsign" href="course_list.php">Course List</a>
-			<a class="hsign" href="courseregister.php" style="color: blue;">Add Course </a>
-			<div class="dropdown">
-		    <button class="dropbtn">Assign Course 
+			
+			<div class="dropdown" style="margin-left: 10px;">
+		    <button class="dropbtn">Cancel Course 
+		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
+		    </button>
+		    <div class="dropdown-content">
+		      <a href="cancel_course_teacher.php">from Teacher</a>
+		      <a href="cancel_course_student.php">from Student</a>
+		      
+		    </div>
+		    </div>
+			<div class="dropdown" style="margin-left: 10px;">
+		    <button class="dropbtn" style="color:blue;">Assign Course 
 		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
 		    </button>
 		    <div class="dropdown-content">
 		      <a href="assign_course_teacher.php">to Teacher</a>
-		      <a href="assign_course_student.php">to Student</a>
+		      <a href="#">to Student</a>
 		      
+		    </div>
+		    </div>
+
+		    <div class="dropdown" style="margin-left: 10px;">
+		    <button class="dropbtn">Course 
+		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
+		    </button>
+		    <div class="dropdown-content">
+		      <a href="courseregister.php">Add Course</a>
+		      <a href="course_list.php">Course List</a>
+		      <a href="delete_course.php">Delete Couse</a>
+		    </div>
+		    </div>
+
+		    <div class="dropdown" style="margin-left: 10px;">
+		    <button class="dropbtn">Student 
+		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
+		    </button>
+		    <div class="dropdown-content">
+		      <a href="studentregister.php">Admit Student</a>
+		      <a href="students_list.php">Student List</a>
+		      <a href="delete_student.php">Delete Student</a>
+		    </div>
+		    </div>
+
+		    <div class="dropdown">
+		    <button class="dropbtn">Teacher 
+		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
+		    </button>
+		    <div class="dropdown-content">
+		      <a href="teacherregister.php">Admit Teacher</a>
+		      <a href="teachers_list.php">Teacher List</a>
+		      <a href="delete_teacher.php">Delete Teacher</a>
 		    </div>
 		    </div>
 		</nav>
 	</header>
+	<div style="min-height: 415px;">
 	<div id="Frame0">
 		<h2 style="text-align: center;">Admit Student in Course</h2>
 	</div>
@@ -94,5 +133,17 @@
 			<input type="submit" name="submit"id="submit" value="Submit">
 		</form>
 	</div>
+	</div>
+	<footer>
+	<div style="padding: 10px;margin-top: 10px;text-align: center;">
+		
+		<hr>
+		<a href="home.php">Teacher's Zone </a>© Copyright 2019-<?php echo date("Y").' ';?> Jalal Uddin Jisan
+		<br>
+		Server time:<?php $timezone = date_default_timezone_set('Asia/Dhaka');
+		$date = date('d/m/Y h:i:s A',time());
+		echo ' '.$date;?>
+	
+	</div></footer>
 </body>
 </html>

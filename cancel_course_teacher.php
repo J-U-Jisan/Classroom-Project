@@ -10,7 +10,7 @@
 
 		$data = array('courseno' => $courseno, 'teacherid' => $teacherid, 'admin_id' => $admin_id);		
 		
-		$response = Requests::post('http://127.0.0.1/apipro/assign_teacher/create.php', array(), $data);
+		$response = Requests::post('http://127.0.0.1/apipro/assign_teacher/delete.php', array(), $data);
 		var_dump($response->body);
 		//header('location:course_list.php');	
 	}
@@ -62,23 +62,22 @@
 	<header>
 		<nav>
 			<a class="hsign" href="admin.php">Home</a>
-			
 			<div class="dropdown" style="margin-left: 10px;">
-		    <button class="dropbtn">Cancel Course 
+		    <button class="dropbtn" style="color: blue;">Cancel Course 
 		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
 		    </button>
 		    <div class="dropdown-content">
-		      <a href="cancel_course_teacher.php">from Teacher</a>
+		      <a href="#">from Teacher</a>
 		      <a href="cancel_course_student.php">from Student</a>
 		      
 		    </div>
 		    </div>
 			<div class="dropdown" style="margin-left: 10px;">
-		    <button class="dropbtn" style="color:blue;">Assign Course 
+		    <button class="dropbtn">Assign Course 
 		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
 		    </button>
 		    <div class="dropdown-content">
-		      <a href="#">to Teacher</a>
+		      <a href="assign_course_teacher.php">to Teacher</a>
 		      <a href="assign_course_student.php">to Student</a>
 		      
 		    </div>
@@ -121,7 +120,7 @@
 	</header>
 	<div style="min-height: 415px;">
 	<div id="Frame0">
-		<h2 style="text-align: center;">Assign Course To Teacher</h2>
+		<h2 style="text-align: center;">Cancel Course From Teacher</h2>
 	</div>
 	<div id="Frame0">
 		<form action="" method="post">
@@ -131,7 +130,7 @@
 			<input type="text" name="teacherid" id="teacherid" placeholder="Enter teacher id..." required>
 			
 			<input type="hidden" name="admin_id" id="admin_id" value="<?php echo $_SESSION['userid'];?>">
-			<input type="submit" name="submit"id="submit" value="Submit">
+			<input type="submit" name="submit"id="submit" value="Delete">
 		</form>
 	</div>
 	</div>

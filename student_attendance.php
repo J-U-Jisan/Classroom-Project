@@ -83,14 +83,16 @@
 			$data = $contents['records'];
 			$no=0;
 			$val = $data;
-			$total = -1;
+			$total = 0;
 			$present = 0;
 			foreach ($data as $key => $value) {
+
 				if($_SESSION['userid']==$value['studentid'] && $_SESSION['courseno']==$value['courseno']){
 					$total++;
 					if($value['present']==1)$present++;
 				}
 			}
+			
 			$percent = ceil(($present*100)/$total);
 
 			foreach ($data as $key => $value) {

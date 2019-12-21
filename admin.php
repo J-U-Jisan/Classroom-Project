@@ -23,22 +23,60 @@
 	<header>
 		<nav>
 			<a class="hsign" href="admin.php"style="color:blue;">Home</a>
-			<a class="hsign" href="teachers_list.php">Teachers List</a>
-			<a class="hsign" href="teacherregister.php">Admit Teachers </a>
-			<a class="hsign" href="students_list.php">Students List</a>
-			<a class="hsign" href="studentregister.php">Admit Student</a>
-			<a class="hsign" href="course_list.php">Course List</a>
-			<a class="hsign" href="courseregister.php">Add Course </a>
 			
-			<div class="dropdown">
-		    <button class="dropbtn">Assign Course <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
+			<div class="dropdown" style="margin-left: 10px;">
+		    <button class="dropbtn">Cancel Course 
+		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
+		    </button>
+		    <div class="dropdown-content">
+		      <a href="cancel_course_teacher.php">from Teacher</a>
+		      <a href="cancel_course_student.php">from Student</a>
+		      
+		    </div>
+		    </div>
+			<div class="dropdown" style="margin-left: 10px;">
+		    <button class="dropbtn">Assign Course 
+		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
 		    </button>
 		    <div class="dropdown-content">
 		      <a href="assign_course_teacher.php">to Teacher</a>
 		      <a href="assign_course_student.php">to Student</a>
 		      
 		    </div>
-		    </div> 
+		    </div>
+
+		    <div class="dropdown" style="margin-left: 10px;">
+		    <button class="dropbtn">Course 
+		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
+		    </button>
+		    <div class="dropdown-content">
+		      <a href="courseregister.php">Add Course</a>
+		      <a href="course_list.php">Course List</a>
+		      <a href="delete_course.php">Delete Couse</a>
+		    </div>
+		    </div>
+
+		    <div class="dropdown" style="margin-left: 10px;">
+		    <button class="dropbtn">Student 
+		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
+		    </button>
+		    <div class="dropdown-content">
+		      <a href="studentregister.php">Admit Student</a>
+		      <a href="students_list.php">Student List</a>
+		      <a href="delete_student.php">Delete Student</a>
+		    </div>
+		    </div>
+
+		    <div class="dropdown">
+		    <button class="dropbtn">Teacher 
+		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
+		    </button>
+		    <div class="dropdown-content">
+		      <a href="teacherregister.php">Admit Teacher</a>
+		      <a href="teachers_list.php">Teacher List</a>
+		      <a href="delete_teacher.php">Delete Teacher</a>
+		    </div>
+		    </div>
 		</nav>
 	</header>
 	<div class="list">
@@ -52,6 +90,7 @@
 
 				$no =0;
 				foreach ($data as $key => $value) {
+					if($value['userid']=='111')continue;
 					if($value['admin_id']==$_SESSION['userid']){
 						?>
 						<div class="teacherbox">
@@ -68,7 +107,7 @@
 		</div>
 		<span style="margin-left: 28px;font-size: 21px;"><a href="teachers_list.php" style="color: #4708a4;">View more details>></a></span>
 	</div>
-	<div class="list" style="background-color: rgba(142, 202, 180, 0.81);">
+	<div class="list" style="background-color: rgba(142, 202, 180, 0.81);min-height: 400px;">
 		<div style="font-size:23px;padding:20px;">Students:</div>
 		<div style="display: block;overflow: hidden;">
 			<?php
@@ -79,6 +118,7 @@
 
 				$no =0;
 				foreach ($data as $key => $value) {
+					if($value['userid']=='111')continue;
 					if($value['admin_id']==$_SESSION['userid']){
 						?>
 						<div class="studentbox">
@@ -95,6 +135,16 @@
 		</div>
 		<span style="margin-left: 28px;font-size: 21px;"><a href="students_list.php" style="color: #084971;">View more details>></a></span>
 	</div>
+	<footer>
+	<div style="padding: 10px;margin-top: 10px;text-align: center;">
+		
+		<hr>
+		<a href="home.php">Teacher's Zone </a>© Copyright 2019-<?php echo date("Y").' ';?> Jalal Uddin Jisan
+		<br>
+		Server time:<?php $timezone = date_default_timezone_set('Asia/Dhaka');
+		$date = date('d/m/Y h:i:s A',time());
+		echo ' '.$date;?>
 	
+	</div></footer>
 </body>
 </html>
