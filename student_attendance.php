@@ -50,16 +50,21 @@
 				if($value['topic']=='111'|| $value['given']==1)continue;
 				if($value['deadline']<date("Y-m-d"))continue;
 				if($value['studentid']==$_SESSION['userid']){
-					if(sizeof($ar)==0){
-						array_push($ar, $value['topic']);
-						echo "Project: ".$value['topic'].", "."Date of Submission: ".$value['deadline'] . "&nbsp&nbsp&nbsp";
-					}
-					else{
-						if($ar[sizeof($ar)-1]!=$value['topic']){
-							array_push($ar, $value['topic']);
-							echo "Project: ".$value['topic'].", "."Date of Submission: ".$value['deadline'] . "&nbsp&nbsp&nbsp";
-						}
-					}
+					echo "Assignment: ".$value['topic'].", "."Date of Submission: ".$value['deadline'] . "&nbsp&nbsp&nbsp";
+				}
+			}
+		?>
+		<?php
+			$url = "http://127.0.0.1/apipro/project/read.php";
+			$json = file_get_contents($url);
+			$contents = json_decode($json,true);
+			$data = $contents['records'];
+			$ar = array();
+			foreach ($data as $key => $value) {
+				if($value['topic']=='111'|| $value['given']==1)continue;
+				if($value['deadline']<date("Y-m-d"))continue;
+				if($value['studentid']==$_SESSION['userid']){
+					echo "Project: ".$value['topic'].", "."Date of Submission: ".$value['deadline'] . "&nbsp&nbsp&nbsp";
 				}
 			}
 		?>
