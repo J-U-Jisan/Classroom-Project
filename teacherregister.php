@@ -20,8 +20,15 @@
 			$data = array('userid' => $userid, 'password' => $password, 'admin_id' => $admin_id, 'email' => $email, 'institute' => $institute,'name' => $name,'contact_no' => $contact_no, 'address' => $address);		
 			
 			$response = Requests::post('http://127.0.0.1/apipro/teachers/create.php', array(), $data);
-			var_dump($response->body);
-			header('location:teachers_list.php');	
+			$rt= $response->body;
+			?>
+			<div>
+				<script>
+					window.alert(<?php echo $rt;?>);
+				</script>
+			</div>
+		<?php
+			//header('location:teachers_list.php');	
 		}
 	}
 ?>

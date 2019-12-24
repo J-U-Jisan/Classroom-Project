@@ -23,7 +23,7 @@
 	<title><?php echo $_SESSION['userid'] . '(ADMIN)';?></title>
 	<style>
 		
-		input[type=text],[type=password],[type=email],[type=address] select{
+		input[type=text],[type=password],[type=email],[type=address] select {
 		  width: 100%;
 		  padding: 12px 20px;
 		  font-size:14px;
@@ -118,6 +118,7 @@
 			
 		</nav>
 	</header>
+
 	<div style="min-height: 415px;">
 	<div id="Frame0">
 		<h2 style="text-align: center;">Cancel Course From Teacher</h2>
@@ -125,12 +126,45 @@
 	<div id="Frame0">
 		<form action="" method="post">
 			<label>Course No<font style="color:red;">*</font></label>
-			<input type="text" name="courseno" id="courseno" placeholder="Enter Your Course No..." required>
+			<?php
+				$url = "http://127.0.0.1/apipro/courses/read.php";
+				$json = file_get_contents($url);
+				$contents = json_decode($json,true);
+				$data = $contents['records'];
+				?>
+				<select name="courseno"style="width: 100%;padding: 12px 20px;font-size:14px;margin: 8px 0; display:inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;">
+				<?php
+				foreach ($data as $key => $value) {
+					if($value['admin_id']==$_SESSION['userid'] && $value['courseno']!='111'){
+					?>
+					<option value="<?php echo $value['courseno'];?>"><?php echo $value['courseno'];?></option>
+					<?php
+					}
+				}
+				?>
+				</select>
+			<!-- <input type="text" name="courseno" id="courseno" placeholder="Enter Your Course No..." required> -->
 			<label>Teacher Id<font style="color:red;">*</font></label>
-			<input type="text" name="teacherid" id="teacherid" placeholder="Enter teacher id..." required>
+			<?php
+				$url = "http://127.0.0.1/apipro/teachers/read.php";
+				$json = file_get_contents($url);
+				$contents = json_decode($json,true);
+				$data = $contents['records'];
+				?>
+				<select name="teacherid" style="width: 100%;padding: 12px 20px;font-size:14px;margin: 8px 0; display:inline-block;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;">
+				<?php
+				foreach ($data as $key => $value) {
+					if($value['admin_id']==$_SESSION['userid'] && $value['userid']!='111'){
+					?>
+					<option value="<?php echo $value['userid'];?>"><?php echo $value['userid'];?></option>
+					<?php
+					}
+				}
+				?>
+				</select>
 			
 			<input type="hidden" name="admin_id" id="admin_id" value="<?php echo $_SESSION['userid'];?>">
-			<input type="submit" name="submit"id="submit" value="Delete">
+			<input type="submit" name="submit"id="submit" value="Delete" onclick="return ConfirmDelete();">
 		</form>
 	</div>
 	</div>
@@ -145,5 +179,15 @@
 		echo ' '.$date;?>
 	
 	</div></footer>
+	<script>
+	    function ConfirmDelete()
+	    {
+	      var x = confirm("Are you sure you want to delete?");
+	      if (x)
+	          return true;
+	      else
+	        return false;
+	    }
+	</script>
 </body>
 </html>

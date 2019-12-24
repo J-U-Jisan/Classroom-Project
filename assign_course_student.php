@@ -11,8 +11,14 @@
 		$data = array('courseno' => $courseno, 'studentid' => $studentid, 'admin_id' => $admin_id);		
 		
 		$response = Requests::post('http://127.0.0.1/apipro/assign_student/create.php', array(), $data);
-		var_dump($response->body);
-		//header('location:course_list.php');	
+		$rt= $response->body;
+			?>
+			<div>
+				<script>
+					window.alert(<?php echo $rt;?>);
+				</script>
+			</div>
+		<?php	
 	}
 ?>
 <!DOCTYPE html>
