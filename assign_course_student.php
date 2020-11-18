@@ -68,7 +68,7 @@
 	<header>
 		<nav>
 			<a class="hsign" href="admin.php">Home</a>
-			
+            <a class="hsign" href="classRoutineAdmin.php">Class Routine</a>
 			<div class="dropdown" style="margin-left: 10px;">
 		    <button class="dropbtn">Cancel Course 
 		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>

@@ -35,6 +35,7 @@
 			<li><a href="teacher_assignment.php">Assignment</a></li>
 			<li><a href="project.php">Project</a></li>
 			<li><a href="mark.php">Mark</a></li>
+			<li><a href="live_class.php">Live Class</a></li>
 			
 		</ul>
 	</div>

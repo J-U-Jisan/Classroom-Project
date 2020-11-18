@@ -47,7 +47,7 @@
 			$data = $contents['records'];
 			$ar = array();
 			foreach ($data as $key => $value) {
-				if($value['topic']=='111'|| $value['given']==1)continue;
+				if($value['topic']=='111'|| $value['given']==1 || $value['deadline']=='0000-00-00')continue;
 				if($value['deadline']<date("Y-m-d"))continue;
 				if($value['studentid']==$_SESSION['userid']){
 					echo "Assignment: ".$value['topic'].", "."Date of Submission: ".$value['deadline'] . "&nbsp&nbsp&nbsp";
@@ -61,7 +61,7 @@
 			$data = $contents['records'];
 			$ar = array();
 			foreach ($data as $key => $value) {
-				if($value['topic']=='111'|| $value['given']==1)continue;
+				if($value['topic']=='111'|| $value['given']==1 || $value['deadline']=='0000-00-00')continue;
 				if($value['deadline']<date("Y-m-d"))continue;
 				if($value['studentid']==$_SESSION['userid']){
 					echo "Project: ".$value['topic'].", "."Date of Submission: ".$value['deadline'] . "&nbsp&nbsp&nbsp";
@@ -73,66 +73,32 @@
 	<div style="margin-top: 10px;">
 		<ul>
 			<li><a href="student.php">Home</a></li>
-			<li><a class="active" href="student_attendance.php">Attendance</a></li>
+			<li><a href="student_attendance.php">Attendance</a></li>
 			<li><a href="assignment_list.php">Assignment</a></li>
 			<li><a href="project_list.php">Project</a></li>
 			<li><a href="mark_list.php">Mark</a></li>
-			<li><a href="student_live_class.php">Live Class</a></li>
+			<li><a class="active" href="student_live_class.php">Live Class</a></li>
 		</ul>
 	</div>
-
-	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;text-align: center; min-height: 315px;" id="attendanceid">
-		<?php
-			$url = "http://127.0.0.1/apipro/attendance/read.php";
+	<div>
+	</div>
+	<div style="text-align: center; margin-top: 10px;">
+		<?php 
+			$url = "http://127.0.0.1/apipro/assign_teacher/read.php";
 			$json = file_get_contents($url);
 			$contents = json_decode($json,true);
 			$data = $contents['records'];
-			$no=0;
-			$val = $data;
-			$total = 0;
-			$present = 0;
+			$class_link = "";
 			foreach ($data as $key => $value) {
-
-				if($_SESSION['userid']==$value['studentid'] && $_SESSION['courseno']==$value['courseno']){
-					$total++;
-					if($value['present']==1)$present++;
+				if($value['courseno']==$_SESSION['courseno'] && $value['admin_id']==$_SESSION['adminid']){
+					
+					$teacherid = $value['teacherid'];
+					$class_link = "https://meet.jit.si/" . $teacherid . $value['courseno'];
+					break;		
 				}
 			}
-			
-			$percent = ceil(($present*100)/$total);
-
-			foreach ($data as $key => $value) {
-				if($_SESSION['userid']==$value['studentid'] && $_SESSION['courseno']==$value['courseno'] && $value['day']!='0000-00-00'){
-					?>
-					<div style="background-color: #00ff4c;padding: 11px;font-size: 22px;width: 7%;float:left;margin-left: 8%;"><?php echo 'No: '.++$no;?></div>
-					<div style="background-color: #b5a7e8;padding: 11px;font-size: 22px;width: 10%;float:left;overflow: hidden;"><?php echo $value['day']?></div>
-					<div style="background-color: #00ff58;padding: 11px;font-size: 22px;width: 10%;float:left;overflow: hidden;"><?php echo $value['studentid']?></div>
-					
-					<button class="attendbutton" id="presentid" name="present" style="margin-left: 60px !important; <?php if($value['present']==1){?> background-color: #40ca23 !important;<?php } ?>" value="<?php echo $value['studentid'];?>">Present</button>
-					<button class="attendbutton" id="absentid" name="absent" value="<?php echo $value['studentid'];?>" style="<?php if($value['present']==2){?> background-color: #40ca23 !important;<?php } ?>">Absent</button>
-
-					<div style="margin-left: 75%;background-color: #00ff58;padding: 11px;font-size: 22px;width: 13%;overflow:hidden;"><?php 
-
-					 $percent = ceil(($present*100)/$total);
-					 echo "Percentage: ".$percent. "%"?></div>	
-					</br>
-				<?php
-				}
-			}
-					
 		?>
-
+		<iframe allow="camera; microphone; fullscreen; display-capture" src="<?php echo $class_link; ?>" style="height: 500px; width: 80%; border: 0px;"></iframe>
 	</div>
-	<footer>
-	<div style="background-image: linear-gradient(180deg,#eabdbd,#7effa4,60%,#a2a87a);padding: 10px;margin-top: 10px;text-align: center;">
-		
-		<hr>
-		<a href="home.php">Teacher's Zone </a>© Copyright 2019-<?php echo date("Y").' ';?> Jalal Uddin Jisan
-		<br>
-		Server time:<?php $timezone = date_default_timezone_set('Asia/Dhaka');
-		$date = date('d/m/Y h:i:s A',time());
-		echo ' '.$date;?>
-	
-	</div></footer>
 </body>
 </html>

@@ -74,6 +74,7 @@
 			<li><a href="assignment_list.php">Assignment</a></li>
 			<li><a href="project_list.php">Project</a></li>
 			<li><a class="active" href="mark_list.php">Mark</a></li>
+			<li><a href="student_live_class.php"> Live Class</a></li>
 		</ul>
 	</div>
 

@@ -30,6 +30,7 @@
 			<li><a class="active" href="teacher_assignment.php">Assignment</a></li>
 			<li><a href="project.php">Project</a></li>
 			<li><a href="mark.php">Mark</a></li>
+			<li><a href="live_class.php">Live Class</a></li>
 		</ul>
 	</div>
 	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#ec69cb);padding: 10px;margin-top: 10px;min-height: 350px;">

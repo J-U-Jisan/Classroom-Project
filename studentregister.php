@@ -39,7 +39,7 @@
 	<title><?php echo $_SESSION['userid'] . '(ADMIN)';?></title>
 	<style>
 		
-		input[type=text],[type=password],[type=email],[type=address] select{
+		input[type=text],[type=number],[type=password],[type=email],[type=address] select{
 		  width: 100%;
 		  padding: 12px 20px;
 		  font-size:14px;
@@ -78,7 +78,7 @@
 	<header>
 		<nav>
 			<a class="hsign" href="admin.php">Home</a>
-			
+            <a class="hsign" href="classRoutineAdmin.php">Class Routine</a>
 			<div class="dropdown" style="margin-left: 10px;">
 		    <button class="dropbtn">Cancel Course 
 		    <span style="transform: rotate(90deg);display: block;float:right;margin-left: 8px;">&#x27A7;</span>
@@ -143,7 +143,7 @@
 			<label>Full Name<font style="color:red;">*</font></label>
 			<input type="text" name="name" id="name" placeholder="Enter Your Full Name..." required>
 			<label>User Name<font style="color:red;">*</font></label>
-			<input type="text" name="userid" id="userid" placeholder="Enter Your Roll Number..." required>
+			<input type="number" name="userid" id="userid" placeholder="Enter Your Roll Number..." required>
 			<label>Password<font style="color:red;">*</font></label>
 			<input type="password" name="password" id="password" placeholder="Enter a Password..." required>
 			<label>Confirm Password<font style="color:red;">*</font></label>

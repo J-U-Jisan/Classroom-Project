@@ -98,6 +98,7 @@
 			<li><a class="active" href="assignment_list.php">Assignment</a></li>
 			<li><a href="project_list.php">Project</a></li>
 			<li><a href="mark_list.php">Mark</a></li>
+			<li><a href="student_live_class.php"> Live Class</a></li>
 		</ul>
 	</div>
 	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;min-height: 315px;" id="attendanceid">
@@ -109,7 +110,7 @@
 			$ar = array();
 			$no=0;
 			foreach ($data as $key => $value) {
-				if($value['topic']=='111')continue;
+				if($value['topic']=='111'|| $value['deadline']=='0000-00-00')continue;
 				if($value['studentid']==$_SESSION['userid'] && $value['courseno']==$_SESSION['courseno']){
 					?>
 					<div style="margin:auto;padding: 10px;background-color: #044c68;font-size: 24px;width:60%;margin-top: 10px;color: white;">

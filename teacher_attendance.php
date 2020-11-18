@@ -65,6 +65,7 @@
 			<li><a href="teacher_assignment.php">Assignment</a></li>
 			<li><a href="project.php">Project</a></li>
 			<li><a href="mark.php">Mark</a></li>
+			<li><a href="live_class.php">Live Class</a></li>
 			
 		</ul>
 	</div>
@@ -79,7 +80,7 @@
 			$no=0;
 			$ar = array();
 			foreach ($data as $key => $value) {
-				if($value['day']=='0001-01-01')continue;
+				if($value['day']=='0000-00-00')continue;
 				if($value['admin_id']==$_SESSION['adminid'] && $value['teacherid']==$_SESSION['userid'] && $value['courseno']==$_SESSION['courseno']){
 					array_push($ar, $value['day']);
 				}

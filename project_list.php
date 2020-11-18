@@ -82,7 +82,7 @@
 			$data = $contents['records'];
 			$ar = array();
 			foreach ($data as $key => $value) {
-				if($value['topic']=='111'|| $value['given']==1)continue;
+				if($value['topic']=='111'|| $value['given']==1 || $value['deadline']=='0000-00-00')continue;
 				if($value['deadline']<date("Y-m-d"))continue;
 				if($value['studentid']==$_SESSION['userid']){
 					echo "Project: ".$value['topic'].", "."Date of Submission: ".$value['deadline'] . "&nbsp&nbsp&nbsp";
@@ -98,6 +98,7 @@
 			<li><a href="assignment_list.php">Assignment</a></li>
 			<li><a class="active" href="project_list.php">Project</a></li>
 			<li><a href="mark_list.php">Mark</a></li>
+			<li><a href="student_live_class.php"> Live Class</a></li>
 		</ul>
 	</div>
 	<div style="background-image: linear-gradient(180deg,#fff,#7effa4,60%,#d5d5d5);padding: 10px;margin-top: 10px;min-height: 315px;" id="attendanceid">
